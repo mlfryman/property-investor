@@ -1,6 +1,7 @@
 'use strict';
 
-var request = require('request');
+var request = require('request'),
+    parser  = require('xml2json');
 
 function Value(){
 }
@@ -15,6 +16,8 @@ Value.getData = function(query, cb){
       url2   = 'http://www.zillow.com/webservice/GetDemographics.htm?zws-id='+zwsid+'&state='+query.state+'&city='+query.city;
   request(url1, function(err1, response1, searchResults){
     request(url2, function(err2,response2, demographics){
+      searchResults = parser.toJson(searchResults);
+      demographics  = parser.toJson(demographics);
       cb(searchResults, demographics);
     });
   });
