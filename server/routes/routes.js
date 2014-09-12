@@ -6,7 +6,10 @@ var morgan         = require('morgan'),
     session        = require('express-session'),
     RedisStore     = require('connect-redis')(session),
     debug          = require('../lib/debug'),
-    home           = require('../controllers/home');
+    home           = require('../controllers/home'),
+    value          = require('../controllers/value'),
+    res            = require('../controllers/res'),
+    cs             = require('../controllers/com');
 
 module.exports = function(app, express){
   app.use(morgan('dev'));
