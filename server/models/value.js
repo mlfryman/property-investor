@@ -4,7 +4,7 @@ function Value(){
 }
 
 Object.defineProperty(Value, 'collection', {
-    get: function(){return global.mongodb.collection('value');}
+  get: function(){return global.mongodb.collection('value');}
 });
 
 module.exports = Value;
