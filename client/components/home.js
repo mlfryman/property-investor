@@ -5,5 +5,7 @@
 
   angular.module('prop')
   .factory('Home', ['$http', function($http){
+
   }]);
+
 })();

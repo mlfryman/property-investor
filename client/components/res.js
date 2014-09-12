@@ -4,6 +4,7 @@
   'use strict';
 
   angular.module('prop')
-  .factory('Res', ['$http', function($http){
+  .factory('Permit', ['$http', function($http){
+
   }]);
 })();
