@@ -2,8 +2,8 @@
 =======================
 
 ### Code Badges
-build status icon
-coverage status icon
+[![Build Status](https://travis-ci.org/mlfryman/property-investor.svg)](https://travis-ci.org/mlfryman/property-investor)
+[![Coverage Status](https://coveralls.io/repos/mlfryman/property-investor/badge.png)](https://coveralls.io/r/mlfryman/property-investor)
 
 ### Screenshots
 forthcoming
