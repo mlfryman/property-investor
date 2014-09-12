@@ -1,17 +1,18 @@
 {
-  "name": "mean-template",
+  "name": "property-investor",
   "version": "0.0.0",
   "description": "The MEAN Template",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chyld/mean-template"
+    "url": "https://github.com/mlfryman/property-investor"
   },
-  "author": "Chyld Medford <chyld.medford@gmail.com>",
+  "author": "Melanie Fryman <melanie@frymanet.com>",
+  "collaborators": "Adam Barnhard <admbarn@gmail.com>, David Boling <daviddboling@gmail.com>, Logan Richardson <g.logan.richardson@gmail.com>, Dennis Stanley <stanleytd@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chyld/mean-template/issues"
+    "url": "https://github.com/mlfryman/property-investor/issues"
   },
-  "homepage": "https://github.com/chyld/mean-template",
+  "homepage": "https://github.com/mlfryman/property-investor",
   "dependencies": {
     "async": "^0.9.0",
     "bcrypt": "^0.8.0",

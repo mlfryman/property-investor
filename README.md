@@ -1,14 +1,15 @@
-## name of project
+# Property Manager
+=======================
+
 ### Code Badges
 build status icon
 coverage status icon
 
 ### Screenshots
-![Image1](https://raw.githubusercontent.com/nss-cohort-2014-06-07/express-template/master/docs/screenshots/one.jpg)
-![Image2](https://raw.githubusercontent.com/nss-cohort-2014-06-07/express-template/master/docs/screenshots/two.jpg)
+forthcoming
 
 ### Description
-write a description about your project
+forthcoming
 
 ### Models
 ```
@@ -29,9 +30,12 @@ Collection 2
 ```
 
 ### Features
-- [x] Feature 1
-- [ ] Feature 2
-- [x] Feature 3
+- [x] Node.js
+- [x] Angular.js
+- [ ] Feature 3
+- [ ] Feature 4
+- [ ] Feature 5
+- [ ] Feature 6
 
 ### Running Tests
 ```bash
@@ -39,8 +43,12 @@ $ npm install
 $ npm test
 ```
 
-### Contributors
-- [Chyld Medford](https://github.com/chyld)
+### Collaborators
+- [Adam Barnhard](https://github.com/ABarnhard)
+- [David Boling](https://github.com/kadowki)
+- [Melanie Fryman](https://github.com/mlfryman)
+- [Logan Richardson](https://github.com/GLoganDR)
+- [Dennis Stanley](https://github.com/tdsjr82)
 
 ### License
 [MIT](LICENSE)

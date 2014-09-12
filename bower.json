@@ -1,11 +1,11 @@
 {
-  "name": "mean-template",
+  "name": "property-investor",
   "version": "0.0.0",
-  "homepage": "https://github.com/chyld/mean-template",
+  "homepage": "https://github.com/mlfryman/property-investor",
   "authors": [
-    "Chyld Medford <chyld.medford@gmail.com>"
+    "Melanie Fryman <melanie@frymanet.com>"
   ],
-  "description": "The MEAN Template",
+  "description": "Property Investor",
   "license": "MIT",
   "dependencies": {
     "angular": "1.3.0-rc.0",
