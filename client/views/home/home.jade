@@ -1,29 +1,32 @@
 h4 {{title}}
 .row
-  .col-xs-3
+  .col-xs-4
     .panel.panel-primary
       .panel-heading
         h3#search.panel-title Search
       .panel-body
-        form(role='form', name='locForm', ng-pattern='/^[0-9]{5}$/', novalidate)
-          fieldset
-            input#lat.form-control(type='hidden', name='loc.lat')
-            input#lng.form-control(type='hidden', name='loc.lng')
-            .form-group
-              label(for='street') Street
+        form.form-horizontal(role='form', name='locForm', ng-pattern='/^[0-9]{5}$/', novalidate)
+          input#lat.form-control(type='hidden', name='loc.lat')
+          input#lng.form-control(type='hidden', name='loc.lng')
+          .form-group
+            label.col-xs-2.control-label(for='street') Street &nbsp;
+            .col-xs-10
               input#street.form-control(type='text', name='street', ng-model='loc.street', required, autofocus)
-            .form-group
-              label(for='city') City
+          .form-group
+            label.col-xs-2.control-label(for='city') City &nbsp;
+            .col-xs-10
               input#city.form-control(type='text', name='city', ng-model='loc.city', required)
-            .form-group
-              label(for='state') State
+          .form-group
+            label.col-xs-2.control-label(for='state') State &nbsp;
+            .col-xs-4
               input#state.form-control(type='text', name='state', ng-model='loc.state', required)
-            .form-group
-              label(for='zip') ZIP
+            label.col-xs-2.control-label(for='zip') ZIP &nbsp;
+            .col-xs-4
               input#zip.form-control(type='text', name='zip', ng-model='loc.zip', required)
-            .form-group
-            button.btn.btn-success(ng-show='locForm.$valid', ng-click='search()') Voltron GO!
-  .col-xs-5
+          .form-group#locButtons
+            button.btn.btn-default.btn-sm.pull-left(ng-show='locForm.$valid') Cancel
+            button.btn.btn-success.btn-sm.pull-right(ng-show='locForm.$valid', ng-click='search()') Voltron GO!
+  .col-xs-4
     #map
   .col-xs-4
     .panel.panel-primary
