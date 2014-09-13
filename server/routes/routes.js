@@ -8,7 +8,8 @@ var morgan         = require('morgan'),
     debug          = require('../lib/debug'),
     permits        = require('../controllers/permits'),
     devApps        = require('../controllers/devapps'),
-    home           = require('../controllers/home');
+    home           = require('../controllers/home'),
+    value          = require('../controllers/value');
 
 module.exports = function(app, express){
   app.use(morgan('dev'));
@@ -23,6 +24,7 @@ module.exports = function(app, express){
   app.get('/home', home.index);
   app.get('/permits', permits.index);
   app.get('/devapps', devApps.index);
+  app.get('/value', value.getData);
 
   console.log('Express: Routes Loaded');
 };
