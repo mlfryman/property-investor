@@ -8,6 +8,8 @@
   .controller('HomeCtrl', ['$scope', 'Home', 'Permit', 'DevApp', 'Value', function($scope, Home, Permit, DevApp, Value){
     $scope.title = 'Home';
 
+    $scope.map = cartographer('map', 35.788399, -86.67444089999998, 5);
+
     $scope.searchPermits = function(){
       var address = $scope.loc.street + ', ' + $scope.loc.city + ', ' + $scope.loc.state + ' ' + $scope.loc.zip;
       geocode(address, function(name, lat, lng){
@@ -17,6 +19,9 @@
         Permit.getPermits(lat, lng).then(function(res){
           $scope.permits = res.data;
         });
+        $scope.map.panTo(new google.maps.LatLng(lat, lng));
+        $scope.map.setZoom(12);
+        $scope.markers.push(addMarker($scope.map, lat, lng, name, '/assets/img/main-icon.png'));
       });
     };
 
@@ -31,15 +36,6 @@
         });
       });
     };
-
-    // DELETE ME! - this is for testing only.
-    $scope.location = {};
-    $scope.locations = [];
-    $scope.search = function(){
-      $scope.locations.push($scope.location);
-      $scope.location = {};
-    };
-    // END DELETE
 
   }]);
 
@@ -63,7 +59,7 @@
 
   function addMarker(map, lat, lng, name, icon){
     var latLng = new google.maps.LatLng(lat, lng);
-    new google.maps.Marker({map: map, position: latLng, title: name, animation: google.maps.Animation.DROP, icon: icon});
+    return new google.maps.Marker({map: map, position: latLng, title: name, animation: google.maps.Animation.DROP, icon: icon});
   }
 
 })();
