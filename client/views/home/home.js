@@ -8,14 +8,26 @@
   .controller('HomeCtrl', ['$scope', 'Home', 'Permit', 'DevApp', 'Value', function($scope, Home, Permit, DevApp, Value){
     $scope.title = 'Home';
 
-    $scope.search = function(){
+    $scope.searchPermits = function(){
       var address = $scope.loc.street + ', ' + $scope.loc.city + ', ' + $scope.loc.state + ' ' + $scope.loc.zip;
       geocode(address, function(name, lat, lng){
         $scope.loc.name = name;
         $scope.loc.lat = lat;
         $scope.loc.lng = lng;
         Permit.getPermits(lat, lng).then(function(res){
-          $scope.data = res.data;
+          $scope.permits = res.data;
+        });
+      });
+    };
+
+    $scope.searchApps = function(){
+      var address = $scope.loc.street + ', ' + $scope.loc.city + ', ' + $scope.loc.state + ' ' + $scope.loc.zip;
+      geocode(address, function(name, lat, lng){
+        $scope.loc.name = name;
+        $scope.loc.lat = lat;
+        $scope.loc.lng = lng;
+        DevApp.getApps(lat, lng).then(function(res){
+          $scope.devApps = res.data;
         });
       });
     };

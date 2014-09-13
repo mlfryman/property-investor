@@ -6,6 +6,8 @@ var morgan         = require('morgan'),
     session        = require('express-session'),
     RedisStore     = require('connect-redis')(session),
     debug          = require('../lib/debug'),
+    permits        = require('../controllers/permits'),
+    devApps        = require('../controllers/devapps'),
     home           = require('../controllers/home');
 
 module.exports = function(app, express){
@@ -19,6 +21,8 @@ module.exports = function(app, express){
   app.use(debug.info);
 
   app.get('/home', home.index);
+  app.get('/permits', permits.index);
+  app.get('/devapps', devApps.index);
 
   console.log('Express: Routes Loaded');
 };
