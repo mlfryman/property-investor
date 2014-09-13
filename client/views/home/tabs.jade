@@ -1,0 +1,16 @@
+// Nav Tabs
+ul#dataTabs.nav.nav-tabs(role='tablist')
+  li.active
+    a(href='#value', role='tab', data-toggle='tab') Home Value Index
+  li
+    a(href='#res', role='tab', data-toggle='tab') Residential Development
+  li
+    a(href='#com', role='tab', data-toggle='tab') Commercial Development
+// Tab panes
+#dataContent.tab-content
+  #value.tab-pane.fade.in.active
+    | INSERT VALUE DATA HERE
+  #res.tab-pane.fade
+    | INSERT RESIDENTIAL DATA HERE
+  #com.tab-pane.fade
+    | INSERT COMMERCIAL DATA HERE

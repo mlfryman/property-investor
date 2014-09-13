@@ -4,7 +4,12 @@
   'use strict';
 
   angular.module('prop')
-  .factory('Com', ['$http', function($http){
+  .factory('DevApp', ['$http', function($http){
+    function getApps(lat, lng){
+      return $http.get('/devapps?lat=' + lat + '&lng=' + lng);
+    }
+
+    return {getApps:getApps};
   }]);
 })();
 
