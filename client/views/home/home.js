@@ -1,5 +1,5 @@
 /* jshint unused:false, camelcase:false */
-/* global google */
+/* global google, Chart */
 
 (function(){
   'use strict';
@@ -41,6 +41,15 @@
     };
     // END DELETE
 
+    //Zestimate and Demographic Median Sale Price/Bar Graph
+    //Size of canvas handled in createBar()
+    $scope.getMedian = function(){
+      Value.getData($scope.loc.street, $scope.loc.city, $scope.loc.state, $scope.loc.zip).then(function(response){
+        createBar(response.data.zestimate, response.data.demoCity, response.data.demoNation);
+      });
+    };
+
+
   }]);
 
   function geocode(address, cb){
@@ -64,6 +73,25 @@
   function addMarker(map, lat, lng, name, icon){
     var latLng = new google.maps.LatLng(lat, lng);
     new google.maps.Marker({map: map, position: latLng, title: name, animation: google.maps.Animation.DROP, icon: icon});
+  }
+
+  function createBar(zest, demoCity, demoNation){
+    var data = {
+      labels: ['Home', 'City', 'Nation'],
+      datasets: [
+        {
+          fillColor: 'rgba(0, 0, 0, 1)',
+          strokeColor: 'rgba(0, 0, 0, 1.0)',
+          highlightFill: 'rgba(220,220,220,1)',
+          highlightStroke: 'rgba(220,220,220,1)',
+          data: [zest, demoCity, demoNation, 0]
+        }
+      ]
+    },
+    ctx = document.getElementById('chart').getContext('2d');
+    ctx.canvas.width = 1000;
+    ctx.canvas.height = 400;
+    new Chart(ctx).Bar(data);
   }
 
 })();

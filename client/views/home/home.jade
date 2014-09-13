@@ -26,7 +26,7 @@ h4 {{title}}
               input#zip.form-control(type='text', name='zip', ng-model='loc.zip', ng-pattern='/^[0-9]{5}$/', required)
           .form-group#locButtons
             button.btn.btn-default.btn-sm.pull-left(ng-show='locForm.$valid') Cancel
-            button.btn.btn-success.btn-sm.pull-right(ng-show='locForm.$valid', ng-click='search()') Voltron GO!
+            button.btn.btn-success.btn-sm.pull-right(ng-show='locForm.$valid', ng-click='getMedian()') Voltron GO!
             button.btn.btn-success(ng-show='locForm.$valid', ng-click='searchPermits()') Find Permits
             button.btn.btn-success(ng-show='locForm.$valid', ng-click='searchApps()') Find Apps
   .col-xs-4
@@ -48,6 +48,7 @@ h4 {{title}}
           br
 .row
   .col-xs-12
+    canvas#chart(style='width: 1000px; height: 1000px')
     include tabs
 
 .row#debug
