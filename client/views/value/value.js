@@ -10,14 +10,11 @@
 
     //Dave note: I am assuming these parameters are coming with ng model, can be changed to be an object instead later.
     Value.getData('908 Archer St', 'Nashville', 'TN', '37203').then(function(response){
-      $scope.zestimate = response.data.zestimate;
-      $scope.demographics = response.data.demographics;
-
-      //will add data later
-      createBar();
+      //will add data to this function later
+      createBar(response.data.zestimate, response.data.demographics);
     });
 
-    function createBar(){
+    function createBar(zest, demo){
       var data = {
         labels: ['Home', 'City', 'Nation'],
         datasets: [
