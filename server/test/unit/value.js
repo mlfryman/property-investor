@@ -1,5 +1,5 @@
 /* jshint expr:true */
-/* global describe, it, before, beforeEach */
+/* global describe, it */
 
 'use strict';
 
