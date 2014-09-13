@@ -1,4 +1,4 @@
-// Controllers = Home, Value, Res[idential], Com[mercial]
+// Controllers = Home
 
 (function(){
   'use strict';

@@ -10,25 +10,25 @@ h4 {{title}}
           input(type='hidden', ng-model='loc.lng')
           input(type='hidden', ng-model='loc.name')
           .form-group
-            label.col-xs-2.control-label(for='street') Street &nbsp;
+            label.col-xs-2.control-label(for='street') Street
             .col-xs-10
               input#street.form-control(type='text', name='street', ng-model='loc.street', required, autofocus)
           .form-group
-            label.col-xs-2.control-label(for='city') City &nbsp;
+            label.col-xs-2.control-label(for='city') City
             .col-xs-10
               input#city.form-control(type='text', name='city', ng-model='loc.city', required)
           .form-group
-            label.col-xs-2.control-label(for='state') State &nbsp;
+            label.col-xs-2.control-label(for='state') State
             .col-xs-4
               input#state.form-control(type='text', name='state', ng-model='loc.state', required)
-            label.col-xs-2.control-label(for='zip') ZIP &nbsp;
+            label.col-xs-2.control-label(for='zip') ZIP
             .col-xs-4
               input#zip.form-control(type='text', name='zip', ng-model='loc.zip', ng-pattern='/^[0-9]{5}$/', required)
           .form-group#locButtons
             button.btn.btn-default.btn-sm.pull-left(ng-show='locForm.$valid') Cancel
             button.btn.btn-success.btn-sm.pull-right(ng-show='locForm.$valid', ng-click='search()') Voltron GO!
-            button.btn.btn-success(ng-show='locationForm.$valid', ng-click='searchPermits()') Find Permits
-            button.btn.btn-success(ng-show='locationForm.$valid', ng-click='searchApps()') Find Apps
+            button.btn.btn-success(ng-show='locForm.$valid', ng-click='searchPermits()') Find Permits
+            button.btn.btn-success(ng-show='locForm.$valid', ng-click='searchApps()') Find Apps
   .col-xs-4
     #map
   .col-xs-4
