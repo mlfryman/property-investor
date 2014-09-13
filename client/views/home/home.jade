@@ -6,8 +6,9 @@ h3 {{title}}
         h3#search.panel-title Search
       .panel-body
         form(role='form', name='locationForm', novalidate)
-          input#lat.form-control(type='hidden', name='loc.lat')
-          input#lng.form-control(type='hidden', name='loc.lng')
+          input#lat.form-control(type='hidden', ng-model='loc.lat')
+          input#lng.form-control(type='hidden', ng-model='loc.lng')
+          input#name.form-control(type='hidden', ng-model='loc.name')
           .form-group
             label(for='street') Street
             input#street.form-control(type='text', name='street', ng-model='loc.street', required, autofocus)
@@ -22,6 +23,8 @@ h3 {{title}}
             input#zip.form-control(type='text', name='zip', ng-model='loc.zip', required)
           .form-group
           button.btn.btn-success(ng-show='locationForm.$valid', ng-click='search()') Voltron GO!
+          button.btn.btn-success(ng-show='locationForm.$valid', ng-click='searchPermits()') Find Apps
+          button.btn.btn-success(ng-show='locationForm.$valid', ng-click='searchApps()') Find Permits
   .col-xs-4
     #map
   .col-xs-4
@@ -44,3 +47,8 @@ h3 {{title}}
   .col-xs-8
     include tabs
   .col-xs-1
+
+.row#debug
+  .col-xs-12
+    pre {{loc | json}}
+    pre {{data | json}}
