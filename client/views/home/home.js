@@ -32,6 +32,15 @@
       });
     };
 
+    // DELETE ME! - this is for testing only.
+    $scope.location = {};
+    $scope.locations = [];
+    $scope.search = function(){
+      $scope.locations.push($scope.location);
+      $scope.location = {};
+    };
+    // END DELETE
+
   }]);
 
   function geocode(address, cb){
