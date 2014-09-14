@@ -13,6 +13,7 @@
     $scope.markers.main = [];
     $scope.markers.permits = [];
     $scope.markers.apps = [];
+    $scope.history = [];
 
     $scope.$on('LOAD', function(){$scope.isLoading=true;});
     $scope.$on('UNLOAD', function(){$scope.isLoading=false;});
@@ -34,6 +35,7 @@
         $scope.map.setZoom(12);
         $scope.markers.main.push(addMarker($scope.map, lat, lng, name, '/assets/img/markers/main-icon.png'));
         $scope.getMedian();
+        $scope.addHistory();
         $timeout(function(){
           $scope.$emit('UNLOAD');
           }, 2000);
@@ -79,6 +81,15 @@
 
     $scope.isSelected = function(checkTab){
       return $scope.tab === checkTab;
+    };
+
+    $scope.addHistory = function(){
+      var loc = new Search($scope.loc);
+      //Do we want to prevent duplicate addresses and also store search type?
+      $scope.history.push(loc);
+      $scope.history = _.uniq($scope.history, function(item, key, s){
+        return item.street;
+      });
     };
 
   }]);
@@ -150,6 +161,17 @@
   function deleteMarkers(markers){
     clearMarkers(markers);
     markers = [];
+  }
+
+  //Search object for search history
+  function Search(o){
+    this.street   = o.street;
+    this.zip      = o.zip;
+    this.state    = o.state;
+    this.city     = o.city;
+    this.name     = o.name;
+    this.lat      = o.lat;
+    this.lng      = o.lng;
   }
 
 })();
