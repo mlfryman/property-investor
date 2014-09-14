@@ -1,18 +1,17 @@
-// Nav Tabs
-ul#dataTabs.nav.nav-tabs(role='tablist')
-  li.active
-    a(role='tab', data-toggle='tab') Home Value Index
-  li
-    a(role='tab', data-toggle='tab') Residential Development
-  li
-    a(role='tab', data-toggle='tab') Commercial Development
-// Tab panes
-#dataContent.tab-content
-  .tab-pane.fade.in.active
-    canvas#value(style='width: 300px; height: 300px')
-  .tab-pane.fade
-    | CONTENT
-  .tab-pane.fade
-    | CONTENT
-canvas#permit-chart(width='409', height='204')
+#tabs(ng-show='loc.name')
+  ul
+    li(ng-class='{active:isSelected(1)}')
+      a(href='', ng-click='selectTab(1)') Home Value Index
+    li(ng-class='{active:isSelected(2)}')
+      a(href='', ng-click='selectTab(2)') Residential Development
+    li(ng-class='{active:isSelected(3)}')
+      a(href='', ng-click='selectTab(3)') Commercial Development
+    br
+  #dataContent
+    .content(ng-show='isSelected(1)')
+      canvas#value(style='width: 300px; height: 300px')
+    .content(ng-show='isSelected(2)')
+      canvas#permit-chart(width='409', height='204')
+    .content(ng-show='isSelected(3)')
+      | CONTENT
 
