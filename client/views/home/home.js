@@ -6,9 +6,13 @@
 
   angular.module('prop')
   .controller('HomeCtrl', ['$scope', '$timeout', 'Home', 'Permit', 'DevApp', 'Value', function($scope, $timeout, Home, Permit, DevApp, Value){
-    $scope.title = 'Home';
-    $scope.charts = [{name: 'chart1.html', url: 'chart1.html'}, {name: 'chart2.html', url: 'chart2.html'}, {name: 'chart3.html', url: 'chart3.html'}];
-    $scope.chart = $scope.charts[0];
+    $scope.title = 'Voltron Investorize';
+
+    $scope.tab = 1;
+    $scope.markers = {};
+    $scope.markers.main = [];
+    $scope.markers.permits = [];
+    $scope.markers.apps = [];
 
     $scope.$on('LOAD', function(){$scope.isLoading=true;});
     $scope.$on('UNLOAD', function(){$scope.isLoading=false;});
@@ -16,7 +20,6 @@
     angular.element(document).ready(function(){
       $scope.map = cartographer('cityMap', 35.788399, -86.67444089999998, 5);
     });
-    $scope.markers = [];
 
     $scope.loc = {street:'915 Glendale Ln', city:'Nashville', state:'TN', zip:'37204'};
 
@@ -29,14 +32,21 @@
         $scope.loc.lng = lng;
         $scope.map.panTo(new google.maps.LatLng(lat, lng));
         $scope.map.setZoom(12);
-        $scope.markers.push(addMarker($scope.map, lat, lng, name, '/assets/img/markers/main-icon.png'));
+        $scope.markers.main.push(addMarker($scope.map, lat, lng, name, '/assets/img/markers/main-icon.png'));
         $scope.getMedian();
-        $scope.$emit('UNLOAD');
+        $timeout(function(){
+          $scope.$emit('UNLOAD');
+          }, 2000);
       });
     };
 
     $scope.searchPermits = function(){
       Permit.getPermits($scope.loc.lat, $scope.loc.lng).then(function(res){
+        res.data.markers.forEach(function(m){
+          $scope.markers.permits.push(addMarkerNoAnimation($scope.map, m.lat, m.lng, m.name, m.icon));
+        });
+        var ctx = document.getElementById('permit-chart').getContext('2d');
+        $scope.permitChart = new Chart(ctx).Pie(res.data.chartData, {});
         $scope.permits = res.data;
       });
     };
@@ -53,6 +63,22 @@
       Value.getData($scope.loc.street, $scope.loc.city, $scope.loc.state, $scope.loc.zip).then(function(response){
         createBar(response.data.zestimate, response.data.demoCity, response.data.demoNation);
       });
+    };
+
+    $scope.selectTab = function(setTab){
+      $scope.tab = setTab;
+      switch(setTab){
+        case 2:
+          if(!$scope.permits){$scope.searchPermits();}
+          break;
+        case 3:
+          if(!$scope.devApps){$scope.searchApps();}
+          break;
+      }
+    };
+
+    $scope.isSelected = function(checkTab){
+      return $scope.tab === checkTab;
     };
 
   }]);
@@ -79,6 +105,11 @@
     return new google.maps.Marker({map: map, position: latLng, title: name, animation: google.maps.Animation.DROP, icon: icon});
   }
 
+  function addMarkerNoAnimation(map, lat, lng, name, icon){
+    var latLng = new google.maps.LatLng(lat, lng);
+    return new google.maps.Marker({map: map, position: latLng, title: name, icon: icon});
+  }
+
   function createBar(zest, demoCity, demoNation){
     var data = {
       labels: ['Home', 'City', 'Nation'],
@@ -96,6 +127,29 @@
     ctx.canvas.width = 1000;
     ctx.canvas.height = 400;
     new Chart(ctx).Bar(data);
+  }
+
+  // Sets the map on all markers in the array.
+  function setAllMap(markers, map){
+    for (var i = 0; i < markers.length; i++){
+      markers[i].setMap(map);
+    }
+  }
+
+  // Removes the markers from the map, but keeps them in the array.
+  function clearMarkers(markers){
+    setAllMap(markers, null);
+  }
+
+  // Shows any markers currently in the array.
+  function showMarkers(markers, map){
+    setAllMap(markers, map);
+  }
+
+  // Deletes all markers in the array by removing references to them.
+  function deleteMarkers(markers){
+    clearMarkers(markers);
+    markers = [];
   }
 
 })();

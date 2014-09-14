@@ -13,7 +13,7 @@ Object.defineProperty(Permit, 'collection', {
 });
 
 Permit.findAllWithin10Miles = function(latLng, cb){
-  var url = 'http://data.nashville.gov/resource/3h5w-q8b7.json?$where=within_circle(mapped_location, ' + latLng.lat + ', '+ latLng.lng +', 16094)';
+  var url = 'http://data.nashville.gov/resource/3h5w-q8b7.json?$where=within_circle(mapped_location, ' + latLng.lat + ', '+ latLng.lng +', 3220)';
 
   request(url, function(err, response, body){
     body = JSON.parse(body);
@@ -44,7 +44,7 @@ function massageData(rawData){
         chartObj = {};
     permits.forEach(function(p){
       var icon = getIconOrColor('I', type);
-      markers.push({lat: p.mapped_location.latitude, lng: p.mapped_location.longitude, name: p.permit_type_description, icon:icon});
+      markers.push({lat: parseFloat(p.mapped_location.latitude), lng: parseFloat(p.mapped_location.longitude), name: p.permit_type_description, icon:icon});
     });
     chartObj.value = permits.length;
     chartObj.label = ((permits.length / total) * 100).toFixed(1) + '% ' + permits[0].permit_type_description;
