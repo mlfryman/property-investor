@@ -1,15 +1,17 @@
 // Nav Tabs
 ul#dataTabs.nav.nav-tabs(role='tablist')
   li.active
-    a(href='#', role='tab', data-toggle='tab') Home Value Index
+    a(role='tab', data-toggle='tab') Home Value Index
   li
-    a(href='#', role='tab', data-toggle='tab', ng-click='searchPermits()') Residential Development
+    a(role='tab', data-toggle='tab') Residential Development
   li
-    a(href='#', role='tab', data-toggle='tab', ng-click='searchApps()') Commercial Development
+    a(role='tab', data-toggle='tab') Commercial Development
 // Tab panes
 #dataContent.tab-content
-  #value.tab-pane.fade.in.active(ng-include='value-chart.html')
-  #res.tab-pane.fade
-    | INSERT RESIDENTIAL DATA HERE
-  #com.tab-pane.fade
-    | INSERT COMMERCIAL DATA HERE
+  .tab-pane.fade.in.active
+    canvas#value(style='width: 300px; height: 300px')
+  .tab-pane.fade
+    | CONTENT
+  .tab-pane.fade
+    | CONTENT
+
