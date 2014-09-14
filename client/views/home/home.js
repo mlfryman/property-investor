@@ -1,5 +1,5 @@
 /* jshint unused:false, camelcase:false */
-/* global google, Chart */
+/* global google, Chart, _ */
 
 (function(){
   'use strict';
