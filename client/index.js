@@ -9,5 +9,6 @@
     .when('/', {templateUrl:'/views/home/home.html', controller:'HomeCtrl'})
     .otherwise({redirectTo:'/'});
   }]);
+
 })();
 

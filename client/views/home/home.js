@@ -7,39 +7,40 @@
   angular.module('prop')
   .controller('HomeCtrl', ['$scope', 'Home', 'Permit', 'DevApp', 'Value', function($scope, Home, Permit, DevApp, Value){
     $scope.title = 'Home';
+    $scope.charts = [{name: 'chart1.html', url: 'chart1.html'}, {name: 'chart2.html', url: 'chart2.html'}, {name: 'chart3.html', url: 'chart3.html'}];
+    $scope.chart = $scope.charts[0];
 
-    $scope.searchPermits = function(){
+    angular.element(document).ready(function(){
+      $scope.map = cartographer('cityMap', 35.788399, -86.67444089999998, 5);
+    });
+    $scope.markers = [];
+
+    $scope.loc = {street:'915 Glendale Ln', city:'Nashville', state:'TN', zip:'37204'};
+
+    $scope.geocodeAndSearch = function(){
       var address = $scope.loc.street + ', ' + $scope.loc.city + ', ' + $scope.loc.state + ' ' + $scope.loc.zip;
       geocode(address, function(name, lat, lng){
         $scope.loc.name = name;
         $scope.loc.lat = lat;
         $scope.loc.lng = lng;
-        Permit.getPermits(lat, lng).then(function(res){
-          $scope.permits = res.data;
-        });
+        $scope.map.panTo(new google.maps.LatLng(lat, lng));
+        $scope.map.setZoom(12);
+        $scope.markers.push(addMarker($scope.map, lat, lng, name, '/assets/img/markers/main-icon.png'));
+        $scope.getMedian();
+      });
+    };
+
+    $scope.searchPermits = function(){
+      Permit.getPermits($scope.loc.lat, $scope.loc.lng).then(function(res){
+        $scope.permits = res.data;
       });
     };
 
     $scope.searchApps = function(){
-      var address = $scope.loc.street + ', ' + $scope.loc.city + ', ' + $scope.loc.state + ' ' + $scope.loc.zip;
-      geocode(address, function(name, lat, lng){
-        $scope.loc.name = name;
-        $scope.loc.lat = lat;
-        $scope.loc.lng = lng;
-        DevApp.getApps(lat, lng).then(function(res){
-          $scope.devApps = res.data;
-        });
+      DevApp.getApps($scope.loc.lat, $scope.loc.lng).then(function(res){
+        $scope.devApps = res.data;
       });
     };
-
-    // DELETE ME! - this is for testing only.
-    $scope.location = {};
-    $scope.locations = [];
-    $scope.search = function(){
-      $scope.locations.push($scope.location);
-      $scope.location = {};
-    };
-    // END DELETE
 
     //Zestimate and Demographic Median Sale Price/Bar Graph
     //Size of canvas handled in createBar()
@@ -48,7 +49,6 @@
         createBar(response.data.zestimate, response.data.demoCity, response.data.demoNation);
       });
     };
-
 
   }]);
 
@@ -66,13 +66,12 @@
   function cartographer(cssId, lat, lng, zoom){
     var mapOptions = {center: new google.maps.LatLng(lat, lng), zoom: zoom, mapTypeId: google.maps.MapTypeId.ROADMAP},
         map = new google.maps.Map(document.getElementById(cssId), mapOptions);
-
     return map;
   }
 
   function addMarker(map, lat, lng, name, icon){
     var latLng = new google.maps.LatLng(lat, lng);
-    new google.maps.Marker({map: map, position: latLng, title: name, animation: google.maps.Animation.DROP, icon: icon});
+    return new google.maps.Marker({map: map, position: latLng, title: name, animation: google.maps.Animation.DROP, icon: icon});
   }
 
   function createBar(zest, demoCity, demoNation){
@@ -88,7 +87,7 @@
         }
       ]
     },
-    ctx = document.getElementById('chart').getContext('2d');
+    ctx = document.getElementById('value').getContext('2d');
     ctx.canvas.width = 1000;
     ctx.canvas.height = 400;
     new Chart(ctx).Bar(data);
