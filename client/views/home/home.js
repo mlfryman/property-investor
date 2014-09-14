@@ -5,10 +5,13 @@
   'use strict';
 
   angular.module('prop')
-  .controller('HomeCtrl', ['$scope', 'Home', 'Permit', 'DevApp', 'Value', function($scope, Home, Permit, DevApp, Value){
+  .controller('HomeCtrl', ['$scope', '$timeout', 'Home', 'Permit', 'DevApp', 'Value', function($scope, $timeout, Home, Permit, DevApp, Value){
     $scope.title = 'Home';
     $scope.charts = [{name: 'chart1.html', url: 'chart1.html'}, {name: 'chart2.html', url: 'chart2.html'}, {name: 'chart3.html', url: 'chart3.html'}];
     $scope.chart = $scope.charts[0];
+
+    $scope.$on('LOAD', function(){$scope.isLoading=true;});
+    $scope.$on('UNLOAD', function(){$scope.isLoading=false;});
 
     angular.element(document).ready(function(){
       $scope.map = cartographer('cityMap', 35.788399, -86.67444089999998, 5);
@@ -18,6 +21,7 @@
     $scope.loc = {street:'915 Glendale Ln', city:'Nashville', state:'TN', zip:'37204'};
 
     $scope.geocodeAndSearch = function(){
+      $scope.$emit('LOAD');
       var address = $scope.loc.street + ', ' + $scope.loc.city + ', ' + $scope.loc.state + ' ' + $scope.loc.zip;
       geocode(address, function(name, lat, lng){
         $scope.loc.name = name;
@@ -27,6 +31,7 @@
         $scope.map.setZoom(12);
         $scope.markers.push(addMarker($scope.map, lat, lng, name, '/assets/img/markers/main-icon.png'));
         $scope.getMedian();
+        $scope.$emit('UNLOAD');
       });
     };
 
