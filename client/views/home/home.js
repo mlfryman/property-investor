@@ -22,7 +22,6 @@
     $scope.loc = {street:'915 Glendale Ln', city:'Nashville', state:'TN', zip:'37204'};
 
     $scope.geocodeAndSearch = function(){
-      $scope.addHistory();
       var address = $scope.loc.street + ', ' + $scope.loc.city + ', ' + $scope.loc.state + ' ' + $scope.loc.zip;
       geocode(address, function(name, lat, lng){
         $scope.loc.name = name;
@@ -31,6 +30,7 @@
         $scope.map.panTo(new google.maps.LatLng(lat, lng));
         $scope.map.setZoom(12);
         $scope.markers.main.push(addMarker($scope.map, lat, lng, name, '/assets/img/markers/main-icon.png'));
+        $scope.addHistory();
         $scope.getMedian();
       });
     };
