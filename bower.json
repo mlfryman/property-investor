@@ -14,7 +14,6 @@
     "fontawesome": "~4.2.0",
     "underscore": "~1.7.0",
     "jquery": "~2.1.1",
-    "chartjs": "1.0.1-beta.4",
-    "angular-ui": "~0.4.0"
+    "chartjs": "1.0.1-beta.4"
   }
 }
