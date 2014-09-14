@@ -1,5 +1,5 @@
 /* jshint unused:false, camelcase:false */
-/* global google */
+/* global google, Chart */
 
 (function(){
   'use strict';
@@ -8,7 +8,9 @@
   .controller('HomeCtrl', ['$scope', 'Home', 'Permit', 'DevApp', 'Value', function($scope, Home, Permit, DevApp, Value){
     $scope.title = 'Home';
 
-    $scope.map = cartographer('map', 35.788399, -86.67444089999998, 5);
+    angular.element(document).ready(function(){
+      $scope.map = cartographer('cityMap', 35.788399, -86.67444089999998, 5);
+    });
     $scope.markers = [];
 
     $scope.loc = {street:'915 Glendale Ln', city:'Nashville', state:'TN', zip:'37204'};
@@ -40,6 +42,14 @@
       });
     };
 
+    //Zestimate and Demographic Median Sale Price/Bar Graph
+    //Size of canvas handled in createBar()
+    $scope.getMedian = function(){
+      Value.getData($scope.loc.street, $scope.loc.city, $scope.loc.state, $scope.loc.zip).then(function(response){
+        createBar(response.data.zestimate, response.data.demoCity, response.data.demoNation);
+      });
+    };
+
   }]);
 
   function geocode(address, cb){
@@ -56,13 +66,31 @@
   function cartographer(cssId, lat, lng, zoom){
     var mapOptions = {center: new google.maps.LatLng(lat, lng), zoom: zoom, mapTypeId: google.maps.MapTypeId.ROADMAP},
         map = new google.maps.Map(document.getElementById(cssId), mapOptions);
-
     return map;
   }
 
   function addMarker(map, lat, lng, name, icon){
     var latLng = new google.maps.LatLng(lat, lng);
     return new google.maps.Marker({map: map, position: latLng, title: name, animation: google.maps.Animation.DROP, icon: icon});
+  }
+
+  function createBar(zest, demoCity, demoNation){
+    var data = {
+      labels: ['Home', 'City', 'Nation'],
+      datasets: [
+        {
+          fillColor: 'rgba(0, 0, 0, 1)',
+          strokeColor: 'rgba(0, 0, 0, 1.0)',
+          highlightFill: 'rgba(220,220,220,1)',
+          highlightStroke: 'rgba(220,220,220,1)',
+          data: [zest, demoCity, demoNation, 0]
+        }
+      ]
+    },
+    ctx = document.getElementById('chart').getContext('2d');
+    ctx.canvas.width = 1000;
+    ctx.canvas.height = 400;
+    new Chart(ctx).Bar(data);
   }
 
 })();
