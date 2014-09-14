@@ -36,7 +36,6 @@
         $scope.markers.main.push(addMarker($scope.map, lat, lng, name, '/assets/img/markers/main-icon.png'));
         $scope.addHistory();
         $scope.getMedian();
-        $scope.addHistory();
         $timeout(function(){
           $scope.$emit('UNLOAD');
         }, 1500);
@@ -44,6 +43,7 @@
     };
 
     $scope.searchPermits = function(){
+      $scope.$emit('LOAD');
       Permit.getPermits($scope.loc.lat, $scope.loc.lng).then(function(res){
         res.data.markers.forEach(function(m){
           $scope.markers.permits.push(addMarkerNoAnimation($scope.map, m.lat, m.lng, m.name, m.icon));
@@ -51,12 +51,15 @@
         var ctx = document.getElementById('permit-chart').getContext('2d');
         $scope.permitChart = new Chart(ctx).Pie(res.data.chartData, {});
         $scope.permits = res.data;
+        $scope.$emit('UNLOAD');
       });
     };
 
     $scope.searchApps = function(){
+      $scope.$emit('LOAD');
       DevApp.getApps($scope.loc.lat, $scope.loc.lng).then(function(res){
         $scope.devApps = res.data;
+        $scope.$emit('UNLOAD');
       });
     };
 
