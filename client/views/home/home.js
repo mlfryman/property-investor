@@ -1,11 +1,11 @@
 /* jshint unused:false, camelcase:false */
-/* global google, Chart */
+/* global google, Chart, _ */
 
 (function(){
   'use strict';
 
   angular.module('prop')
-  .controller('HomeCtrl', ['$scope', 'Home', 'Permit', 'DevApp', 'Value', function($scope, Home, Permit, DevApp, Value){
+  .controller('HomeCtrl', ['$scope', '$timeout', 'Home', 'Permit', 'DevApp', 'Value', function($scope, $timeout, Home, Permit, DevApp, Value){
     $scope.title = 'Voltron Investorize';
 
     $scope.tab = 1;
@@ -15,6 +15,9 @@
     $scope.markers.apps = [];
     $scope.history = [];
 
+    $scope.$on('LOAD', function(){$scope.isLoading=true;});
+    $scope.$on('UNLOAD', function(){$scope.isLoading=false;});
+
     angular.element(document).ready(function(){
       $scope.map = cartographer('cityMap', 35.788399, -86.67444089999998, 5);
     });
@@ -22,6 +25,7 @@
     $scope.loc = {street:'915 Glendale Ln', city:'Nashville', state:'TN', zip:'37204'};
 
     $scope.geocodeAndSearch = function(){
+      $scope.$emit('LOAD');
       var address = $scope.loc.street + ', ' + $scope.loc.city + ', ' + $scope.loc.state + ' ' + $scope.loc.zip;
       geocode(address, function(name, lat, lng){
         $scope.loc.name = name;
@@ -32,10 +36,14 @@
         $scope.markers.main.push(addMarker($scope.map, lat, lng, name, '/assets/img/markers/main-icon.png'));
         $scope.addHistory();
         $scope.getMedian();
+        $timeout(function(){
+          $scope.$emit('UNLOAD');
+        }, 1500);
       });
     };
 
     $scope.searchPermits = function(){
+      $scope.$emit('LOAD');
       Permit.getPermits($scope.loc.lat, $scope.loc.lng).then(function(res){
         res.data.markers.forEach(function(m){
           $scope.markers.permits.push(addMarkerNoAnimation($scope.map, m.lat, m.lng, m.name, m.icon));
@@ -43,12 +51,15 @@
         var ctx = document.getElementById('permit-chart').getContext('2d');
         $scope.permitChart = new Chart(ctx).Pie(res.data.chartData, {});
         $scope.permits = res.data;
+        $scope.$emit('UNLOAD');
       });
     };
 
     $scope.searchApps = function(){
+      $scope.$emit('LOAD');
       DevApp.getApps($scope.loc.lat, $scope.loc.lng).then(function(res){
         $scope.devApps = res.data;
+        $scope.$emit('UNLOAD');
       });
     };
 
