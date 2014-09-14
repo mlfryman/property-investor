@@ -24,5 +24,6 @@
       .form-group#locButtons
         button.btn.btn-default.btn-sm.pull-left(ng-show='locForm.$valid') Cancel
         button.btn.btn-success.btn-sm.pull-right(ng-show='locForm.$valid', ng-click='getMedian()') Voltron GO!
-        button.btn.btn-success(ng-show='locForm.$valid', ng-click='searchPermits()') Find Permits
-        button.btn.btn-success(ng-show='locForm.$valid', ng-click='searchApps()') Find Apps
+      .form-group#locButtons
+        button.btn.btn-primary.btn-sm.pull-left(ng-show='locForm.$valid', ng-click='searchPermits()') Find Permits
+        button.btn.btn-primary.btn-sm.pull-right(ng-show='locForm.$valid', ng-click='searchApps()') Find Apps
