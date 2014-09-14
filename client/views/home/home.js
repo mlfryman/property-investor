@@ -7,6 +7,8 @@
   angular.module('prop')
   .controller('HomeCtrl', ['$scope', 'Home', 'Permit', 'DevApp', 'Value', function($scope, Home, Permit, DevApp, Value){
     $scope.title = 'Home';
+    $scope.charts = [{name: 'chart1.html', url: 'chart1.html'}, {name: 'chart2.html', url: 'chart2.html'}, {name: 'chart3.html', url: 'chart3.html'}];
+    $scope.chart = $scope.charts[0];
 
     $scope.searchPermits = function(){
       var address = $scope.loc.street + ', ' + $scope.loc.city + ', ' + $scope.loc.state + ' ' + $scope.loc.zip;
@@ -32,15 +34,6 @@
       });
     };
 
-    // DELETE ME! - this is for testing only.
-    $scope.location = {};
-    $scope.locations = [];
-    $scope.search = function(){
-      $scope.locations.push($scope.location);
-      $scope.location = {};
-    };
-    // END DELETE
-
     //Zestimate and Demographic Median Sale Price/Bar Graph
     //Size of canvas handled in createBar()
     $scope.getMedian = function(){
@@ -48,8 +41,6 @@
         createBar(response.data.zestimate, response.data.demoCity, response.data.demoNation);
       });
     };
-
-
   }]);
 
   function geocode(address, cb){
@@ -88,7 +79,7 @@
         }
       ]
     },
-    ctx = document.getElementById('chart').getContext('2d');
+    ctx = document.getElementById('value').getContext('2d');
     ctx.canvas.width = 1000;
     ctx.canvas.height = 400;
     new Chart(ctx).Bar(data);
