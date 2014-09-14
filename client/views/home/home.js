@@ -1,5 +1,5 @@
 /* jshint unused:false, camelcase:false */
-/* global google, Chart */
+/* global google, Chart, _ */
 
 (function(){
   'use strict';
@@ -34,11 +34,12 @@
         $scope.map.panTo(new google.maps.LatLng(lat, lng));
         $scope.map.setZoom(12);
         $scope.markers.main.push(addMarker($scope.map, lat, lng, name, '/assets/img/markers/main-icon.png'));
+        $scope.addHistory();
         $scope.getMedian();
         $scope.addHistory();
         $timeout(function(){
           $scope.$emit('UNLOAD');
-          }, 2000);
+        }, 1500);
       });
     };
 
