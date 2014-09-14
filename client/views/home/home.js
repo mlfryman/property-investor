@@ -9,6 +9,7 @@
     $scope.title = 'Home';
     $scope.charts = [{name: 'chart1.html', url: 'chart1.html'}, {name: 'chart2.html', url: 'chart2.html'}, {name: 'chart3.html', url: 'chart3.html'}];
     $scope.chart = $scope.charts[0];
+    $scope.tab = 1;
 
     angular.element(document).ready(function(){
       $scope.map = cartographer('cityMap', 35.788399, -86.67444089999998, 5);
@@ -48,6 +49,13 @@
       Value.getData($scope.loc.street, $scope.loc.city, $scope.loc.state, $scope.loc.zip).then(function(response){
         createBar(response.data.zestimate, response.data.demoCity, response.data.demoNation);
       });
+    };
+
+    $scope.selectTab = function(setTab){
+      $scope.tab = setTab;
+    };
+    $scope.isSelected = function(checkTab){
+      return $scope.tab === checkTab;
     };
 
   }]);
