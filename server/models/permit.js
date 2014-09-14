@@ -61,7 +61,7 @@ function getIconOrColor(type, permit){
     // "CADM, BUILDING DEMOLITION PERMIT"
     switch(type){
       case 'I':
-        return '/assets/img/demolition.png';
+        return '/assets/img/markers/demolition.png';
       default:
         return '#FF4136';
     }
@@ -69,7 +69,7 @@ function getIconOrColor(type, permit){
     // New residential construction
     switch(type){
       case 'I':
-        return '/assets/img/new-res.png';
+        return '/assets/img/markers/new-res.png';
       default:
         return '#01FF70';
     }
@@ -77,7 +77,7 @@ function getIconOrColor(type, permit){
     // renovation of existing residential property
     switch(type){
       case 'I':
-        return '/assets/img/ren-res.png';
+        return '/assets/img/markers/ren-res.png';
       default:
         return '#39CCCC';
     }
@@ -85,7 +85,7 @@ function getIconOrColor(type, permit){
     // New Comercial Construction
     switch(type){
       case 'I':
-        return '/assets/img/new-com.png';
+        return '/assets/img/markers/new-com.png';
       default:
         return '#FFDC00';
     }
@@ -93,7 +93,7 @@ function getIconOrColor(type, permit){
     // renovation of existing comercial property
     switch(type){
       case 'I':
-        return '/assets/img/ren-com.png';
+        return '/assets/img/markers/ren-com.png';
       default:
         return '#FF851B';
     }
@@ -101,7 +101,7 @@ function getIconOrColor(type, permit){
     // Misc Construction permits
     switch(type){
       case 'I':
-        return '/assets/img/misc.png';
+        return '/assets/img/markers/misc.png';
       default:
         return '#DDDDDD';
     }
