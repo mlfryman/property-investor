@@ -45,6 +45,7 @@
     $scope.searchPermits = function(){
       $scope.$emit('LOAD');
       Permit.getPermits($scope.loc.lat, $scope.loc.lng).then(function(res){
+        clearMarkers($scope.markers.apps);
         res.data.markers.forEach(function(m){
           $scope.markers.permits.push(addMarkerNoAnimation($scope.map, m.lat, m.lng, m.name, m.icon));
         });
@@ -58,6 +59,11 @@
     $scope.searchApps = function(){
       $scope.$emit('LOAD');
       DevApp.getApps($scope.loc.lat, $scope.loc.lng).then(function(res){
+        clearMarkers($scope.markers.permits);
+        res.data.markers.forEach(function(m){
+          $scope.markers.apps.push(addMarkerNoAnimation($scope.map, m.lat, m.lng, m.name, m.icon));
+        });
+        $scope.appRows = res.data.tableRows;
         $scope.devApps = res.data;
         $scope.$emit('UNLOAD');
       });
@@ -67,6 +73,7 @@
     //Size of canvas handled in createBar()
     $scope.getMedian = function(){
       Value.getData($scope.loc.street, $scope.loc.city, $scope.loc.state, $scope.loc.zip).then(function(response){
+        $scope.homeValue = response.data.zestimate;
         createBar(response.data.zestimate, response.data.demoCity, response.data.demoNation);
       });
     };
@@ -74,11 +81,25 @@
     $scope.selectTab = function(setTab){
       $scope.tab = setTab;
       switch(setTab){
+        case 1:
+          clearMarkers($scope.markers.apps || []);
+          clearMarkers($scope.markers.permits || []);
+          break;
         case 2:
-          if(!$scope.permits){$scope.searchPermits();}
+          clearMarkers($scope.markers.apps || []);
+          if(!$scope.permits){
+            $scope.searchPermits();
+          }else{
+            showMarkers($scope.markers.permits, $scope.map);
+          }
           break;
         case 3:
-          if(!$scope.devApps){$scope.searchApps();}
+          clearMarkers($scope.markers.permits || []);
+          if(!$scope.devApps){
+            $scope.searchApps();
+          }else{
+            showMarkers($scope.markers.apps, $scope.map);
+          }
           break;
       }
     };

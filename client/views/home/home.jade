@@ -10,15 +10,9 @@ h4 {{title}}
         h3#details.panel-title Details
       .panel-body
         dl.dl-horizontal
-          dt Median Home Value:
-          dd "value"
-          br
-          dt Stability:&nbsp;
-          dd "stable || not stable"
-          br
-          dt Good/Bad Investment:
-          dd "Go for it! || RUN AWAY!"
-          br
+          dt Estimated Home Value:
+          dd ${{homeValue.toFixed(2)}}
+
 .row(ng-show='loc.name')
   .col-xs-12
     include tabs
@@ -26,7 +20,9 @@ h4 {{title}}
 .row#debug
   .col-xs-12
     pre {{loc | json}}
-    pre {{permits | json}}
+    pre {{zilDrill | json}}
+    pre {{zillow | json}}
     pre {{devApps | json}}
+    pre {{permits | json}}
     pre {{history | json}}
 

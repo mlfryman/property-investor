@@ -12,7 +12,7 @@ Object.defineProperty(Permit, 'collection', {
   get: function(){return global.mongodb.collection('permits');}
 });
 
-Permit.findAllWithin10Miles = function(latLng, cb){
+Permit.findAllWithin2Miles = function(latLng, cb){
   var url = 'http://data.nashville.gov/resource/3h5w-q8b7.json?$where=within_circle(mapped_location, ' + latLng.lat + ', '+ latLng.lng +', 3220)';
 
   request(url, function(err, response, body){
