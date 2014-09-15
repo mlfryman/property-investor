@@ -32,8 +32,7 @@ Value.getData = function(query, cb){
 
       //data massage
       var demoCity = demographics['Demographics:demographics'].response.pages.page[0].tables.table.data.attribute[1].values.city.value.$t,
-      demoNation = demographics['Demographics:demographics'].response.pages.page[0].tables.table.data.attribute[1].values.nation.value.$t;
-
+          demoNation = demographics['Demographics:demographics'].response.pages.page[0].tables.table.data.attribute[1].values.nation.value.$t;
       cb(zest, demoCity, demoNation);
 
     });

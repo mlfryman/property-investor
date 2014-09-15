@@ -13,5 +13,13 @@
     .content(ng-show='isSelected(2)')
       canvas#permit-chart(width='409', height='204')
     .content(ng-show='isSelected(3)')
-      | CONTENT
+      table.table.table-hover
+        thead
+          tr
+            th Project
+            th Meeting Date
+        tbody
+          tr(ng-repeat='r in appRows')
+            td {{r.project}}
+            td {{r.meetingDate | date:'mediumDate'}}
 
